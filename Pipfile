@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+psycopg2 = "*"
+django-crispy-forms = "*"
+django-allauth = "*"
+environs = {extras = ["django"], version = "*"}
+pillow = "*"
+django-debug-toolbar = "*"
+
+[dev-packages]
+django-debug-toolbar = "*"
+coverage = "*"
+tox = "*"
+
+[requires]
+python_version = "3.9"

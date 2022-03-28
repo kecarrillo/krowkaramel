@@ -1,0 +1,17 @@
+<!-- templates/products/category_list.html -->
+{% extends '_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Categories' %}{% endblock title %}
+
+{% block content %}
+    {% for category in category_list %}
+        <div>
+            <h2>
+                <a href="{{ category.get_absolute_url }}" title="{{ category.name }}">
+                    {{ category.name }}
+                </a>
+            </h2>
+        </div>
+    {% endfor %}
+{% endblock content %}

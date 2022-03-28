@@ -1,0 +1,23 @@
+<!-- templates/products/search_results.html -->
+{% extends '_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Search" %}{% endblock title %}
+
+{% block content %}
+    <h1>
+        {% trans "Search Results" %}
+    </h1>
+    {% for product in product_list %}
+         <div>
+            <a href="{{ product.get_absolute_url }}" title="{% trans 'See Product Details' %}">
+                <figure>
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    <figcaption>
+                        {{ product.name }}
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock content %}

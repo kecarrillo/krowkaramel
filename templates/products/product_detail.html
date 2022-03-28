@@ -1,0 +1,72 @@
+<!-- templates/products/product_detail.html -->
+{% extends '_base.html' %}
+{% load i18n %}
+
+{% block title %}{{ product.name }}{% endblock title %}
+
+{% block content %}
+    <div>
+        <h2>
+            <a href="">
+                {{ product.name }}
+            </a>
+        </h2>
+        <div>
+            {% if product.image %}
+                <div>
+                    <figure>
+                        <img src="{{ product.image }}" alt="{{ product.name }}">
+                    </figure>
+                    <p>{{ product.description }}</p>
+                </div>
+            {% endif %}
+            <div>
+                <p>{% trans "Price" %}: {{ product.price }}</p>
+                <p>{% trans "Availability" %}: {{ product.available }}</p>
+                <p>
+                    {% trans "You can buy it " %}
+                    <button class="btn btn-primary" type="submit">
+                        {% trans "Buy" %}
+                    </button>
+                </p>
+                <p>
+                    {% trans "Or order it so you don't have to think about it anymore " %}
+                    <button class="btn btn-success" type="submit">
+                        {% trans "Order" %}
+                    </button>
+                </p>
+            </div>
+        </div>
+        <h3>{% trans "Specifications" %}:</h3>
+        <ul>
+            <li>{% trans "Flavour" %}: {{ product.flavour }}</li>
+            <li>{% trans "Allergen" %}: {{ product.allergen }}</li>
+            <li>{% trans "Bio" %}: {{ product.is_bio }}</li>
+            <li>{% trans "Gluten free" %}: {{ product.is_gluten_free }}</li>
+            <li>{% trans "Glucose syrup free" %}: {{ product.is_glucose_syrup_free }}</li>
+            <li>{% trans "Hydrogenated vegetable fats free" %}: {{ product.is_hydrogenated_vegetable_fats_free }}</li>
+            <li>{% trans "Handcrafted" %}: {{ product.is_handcrafted }}</li>
+            <li>{% trans "Number per product" %}: {{ product.unit_number }}</li>
+        </ul>
+        <figure>
+            {% if product.is_eur_label_bio  %}
+                <img src="{% url 'static/images/logoeurAB.jpg' %}" alt="{% trans 'European organic farming label' %}">
+            {% endif %}
+            {% if product.is_fr_label_bio  %}
+                <img src="{% url 'static/images/logofrab.jpg' %}" alt="{% trans 'French organic farming label' %}">
+            {% endif %}
+        </figure>
+        <div>
+            <h3>
+                {% trans "Reviews" %}
+            </h3>
+            <ul>
+                {% for review in product.reviews.all %}
+                    <li>
+                        {{ review.review }} ({{ review.author }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock content %}
