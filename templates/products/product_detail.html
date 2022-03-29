@@ -1,72 +1,123 @@
 <!-- templates/products/product_detail.html -->
 {% extends '_base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{{ product.name }}{% endblock title %}
 
 {% block content %}
-    <div>
-        <h2>
-            <a href="">
-                {{ product.name }}
-            </a>
-        </h2>
-        <div>
-            {% if product.image %}
-                <div>
-                    <figure>
-                        <img src="{{ product.image }}" alt="{{ product.name }}">
-                    </figure>
-                    <p>{{ product.description }}</p>
-                </div>
-            {% endif %}
-            <div>
-                <p>{% trans "Price" %}: {{ product.price }}</p>
-                <p>{% trans "Availability" %}: {{ product.available }}</p>
-                <p>
-                    {% trans "You can buy it " %}
-                    <button class="btn btn-primary" type="submit">
-                        {% trans "Buy" %}
-                    </button>
-                </p>
-                <p>
-                    {% trans "Or order it so you don't have to think about it anymore " %}
-                    <button class="btn btn-success" type="submit">
-                        {% trans "Order" %}
-                    </button>
-                </p>
-            </div>
+    <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <img src="{% if product.image %}
+                              {{ product.image.url }}
+                          {% else %}
+                            {% static 'img/no_image.png' %}
+                          {% endif %}"
+                     class="card-img-top"
+                     alt="{% trans 'Product image' %}">
+
         </div>
-        <h3>{% trans "Specifications" %}:</h3>
-        <ul>
-            <li>{% trans "Flavour" %}: {{ product.flavour }}</li>
-            <li>{% trans "Allergen" %}: {{ product.allergen }}</li>
-            <li>{% trans "Bio" %}: {{ product.is_bio }}</li>
-            <li>{% trans "Gluten free" %}: {{ product.is_gluten_free }}</li>
-            <li>{% trans "Glucose syrup free" %}: {{ product.is_glucose_syrup_free }}</li>
-            <li>{% trans "Hydrogenated vegetable fats free" %}: {{ product.is_hydrogenated_vegetable_fats_free }}</li>
-            <li>{% trans "Handcrafted" %}: {{ product.is_handcrafted }}</li>
-            <li>{% trans "Number per product" %}: {{ product.unit_number }}</li>
-        </ul>
-        <figure>
-            {% if product.is_eur_label_bio  %}
-                <img src="{% url 'static/images/logoeurAB.jpg' %}" alt="{% trans 'European organic farming label' %}">
-            {% endif %}
-            {% if product.is_fr_label_bio  %}
-                <img src="{% url 'static/images/logofrab.jpg' %}" alt="{% trans 'French organic farming label' %}">
-            {% endif %}
-        </figure>
-        <div>
-            <h3>
-                {% trans "Reviews" %}
-            </h3>
-            <ul>
-                {% for review in product.reviews.all %}
-                    <li>
-                        {{ review.review }} ({{ review.author }}
-                    </li>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+            <div class="mb-3">
+                {% for badge in product.badges %}
+                    <a href="">
+                        <span class="badge purple mr-1">{{badge.name}}</span>
+                    </a>
                 {% endfor %}
-            </ul>
+            </div>
+
+            <p class="lead">
+                {% if product.is_promoted %}
+                    <span class="mr-1">
+                        <del>{{product.price}}</del>
+                    </span>
+                    <span>{{product.promoted_price}}</span>
+                {% else %}
+                    <span>{{product.price}}</span>
+                {% endif %}
+            </p>
+
+            <p class="lead font-weight-bold">{% trans "Description" %}</p>
+
+            <p>{{product.description}}</p>
+
+            <form class="d-flex justify-content-left">
+              <!-- Default input -->
+              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </button>
+
+            </form>
+
+          </div>
+          <!--Content-->
+
         </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+
+          <h4 class="my-4 h4">{% trans "Additional Informations" %}</h4>
+
+            <p>{% trans "Category" %}: {{ product.category }}</p>
+            <p>{% trans "Name" %}: {{ product.name }}</p>
+            <p>{% trans "Flavour" %}: {{ product.flavour }}</p>
+            <p>{% trans "Allergens" %}: {{ product.allergen }}</p>
+            <p>{% trans "Bio" %}: {{ product.is_bio }}</p>
+            <p>{% trans "Handcrafted" %}: {{ product.is_handcrafted }}</p>
+            <p>{% trans "No Glucose Syrup" %}: {{ product.is_glucose_syrup_free }}</p>
+            <p>{% trans "No Gluten" %}: {{ product.is_gluten_free }}</p>
+            <p>{% trans "No Hydrogenated Vegetable Fats" %}: {{ product.is_hydrogenated_vegetable_fats_free }}</p>
+            <p>{% trans "Quantity per product" %}: {{ product.unit_number }}</p>
+            <p>{% trans "Available" %}: {{ product.available }}</p>
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+          {% for prod in category.products %}
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-12 mb-4">
+
+                <img src="{{ prod.image }}" class="img-fluid" alt="{{ prod.name }}">
+
+            </div>
+            <!--Grid column-->
+          {% endfor %}
+
+      </div>
+      <!--Grid row-->
+
     </div>
+  </main>
+  <!--Main layout-->
 {% endblock content %}

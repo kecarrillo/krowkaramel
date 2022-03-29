@@ -23,6 +23,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),  # URL Auth
     path('', include('pages.urls')),  # index
     path('products/', include('products.urls', namespace='shop')),  # e-shop
+    path('cart/', include('cart.urls', namespace='cart')),  # Cart
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

@@ -11,12 +11,12 @@
     {% for product in product_list %}
          <div>
             <a href="{{ product.get_absolute_url }}" title="{% trans 'See Product Details' %}">
-                <figure>
-                    <img src="{{ product.image }}" alt="{{ product.name }}">
-                    <figcaption>
-                        {{ product.name }}
-                    </figcaption>
-                </figure>
+{#                <figure>#}
+{#                    <img src="{{ product.images }}" alt="{{ product.name }}">#}
+{#                    <figcaption>#}
+{#                        {{ product.name }}#}
+{#                    </figcaption>#}
+{#                </figure>#}
             </a>
         </div>
     {% endfor %}

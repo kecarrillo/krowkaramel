@@ -30,8 +30,6 @@ class Category(models.Model):
 
 class Allergen(models.Model):
     name = models.CharField(max_length=200, db_index=True)
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(),
-                          editable=False)
 
     class Meta:
         ordering = ('name',)
@@ -42,8 +40,6 @@ class Allergen(models.Model):
 
 class Flavour(models.Model):
     name = models.CharField(max_length=200, db_index=True)
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(),
-                          editable=False)
 
     class Meta:
         ordering = ('name',)
@@ -52,16 +48,33 @@ class Flavour(models.Model):
         return self.name
 
 
+class Badge(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+
+class ProductImage(models.Model):
+    image = models.ImageField(upload_to='products/', blank=True)
+
+    class Meta:
+        ordering = ('image',)
+
+
 class Product(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(),
-                          editable=False, db_index=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          db_index=True, unique=True)
     name = models.CharField(max_length=200, db_index=True)
     category = models.ForeignKey(Category, related_name='products',
                                  on_delete=models.CASCADE)
-    flavour = models.ForeignKey(Flavour, related_name='products',
-                                on_delete=models.CASCADE)
-    allergen = models.ForeignKey(Allergen, related_name='products',
-                                 on_delete=models.CASCADE)
+    flavour = models.ManyToManyField(Flavour, related_name='products')
+    allergen = models.ManyToManyField(Allergen, related_name='products',
+                                      blank=True)
+    badges = models.ManyToManyField(Badge, related_name='products', blank=True)
 
     AVAILABLE = 'AV'
     STOCK_OUT = 'SO'
@@ -76,7 +89,8 @@ class Product(models.Model):
             choices=AVAILABILITY_CHOICES,
             default=STOCK_OUT,
     )
-    image = models.ImageField(upload_to='products/', blank=True)
+    images = models.ManyToManyField(ProductImage, related_name='products',
+                                    blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
@@ -89,6 +103,9 @@ class Product(models.Model):
     is_eur_label_bio = models.BooleanField(default=True)
     is_fr_label_bio = models.BooleanField(default=True)
     unit_number = models.IntegerField()
+    is_promoted = models.BooleanField(default=False)
+    promoted_price = models.DecimalField(max_digits=10, decimal_places=2,
+                                         null=True, blank=True)
 
     class Meta:
         ordering = ('name',)

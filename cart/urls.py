@@ -1,4 +1,4 @@
-"""products URL Configuration
+"""cart URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -14,18 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from . import views
 
-from .views import SearchResultsListView, product_detail, product_list
-
-app_name = 'shop'
+app_name = 'cart'
 
 urlpatterns = [
-    # path('', CategoryListView.as_view(), name='category_list'),
-    # path('<uuid:pk>/', ProductListView.as_view(), name='product_list'),
-    path('', product_list, name='product_list'),
-    path('<slug:category_slug>/', product_list, name='product_list_by_category'),
-    path('<uuid:pk>', product_detail, name='product_detail'),
-    # path('<uuid:pk>/<uuid:pk>', ProductDetailView.as_view(),
-    #      name='product_detail'),
-    path('search/', SearchResultsListView.as_view(), name='search-results'),
+    path('', views.cart_detail, name='cart_detail'),
+    path('add/<uuid:product_id>', views.cart_add, name='cart_add'),  # pk ?
+    path('remove/<uuid:product_id>', views.cart_remove, name='cart_remove'),
 ]

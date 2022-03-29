@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'accounts',
     'pages',
     'products',
+    'cart',
     # 3rd PART
     'crispy_forms',
     'allauth',
@@ -182,3 +183,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 604_800
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
+# CART
+CART_SESSION_ID = 'cart'
