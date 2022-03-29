@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Client{% endblock title %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>fill</p>
+        <p>fill</p>
+        <p class="ml-5">username : {{ user.username }}</p>
+        <p class="ml-5">email : {{ user.email }}</p>
+        <p class="ml-5">password : {{ user.password }}</p>
+        <p></p>
+        <p><a href="{%  url 'account_logout' %}">Log Out</a></p>
+{% else %}
+
+
+<a href="{% url 'account_login' %}">Log In</a> |
+<a href="{% url 'account_signup' %}">Sign Up</a>
+
+{% endif %}
+{% endblock content %}
