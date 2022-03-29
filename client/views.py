@@ -8,4 +8,4 @@ from products.models import Product
 
 
 def client(request):
-    return render(request, 'client/client.html')
+    return render(request, 'client/client.html',)   #{'user':}
