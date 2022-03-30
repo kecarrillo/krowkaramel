@@ -18,6 +18,10 @@ def cart_detail(request):
     :rtype: any
     """
     cart = Cart(request)
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(
+                initial={'quantity': item['quantity'], 'update_product': True}
+        )
     return render(request, 'cart/cart_detail.html', {'cart': cart})
 
 

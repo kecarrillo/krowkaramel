@@ -150,7 +150,7 @@
       <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
 
         <!-- Navbar brand -->
-        <span class="navbar-brand">Categories:</span>
+        <span class="navbar-brand">{% trans "Categories" %}:</span>
 
         <!-- Collapse button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -175,7 +175,9 @@
                 <li {% if category.slug == cat.slug %}
                         class="selected nav-item">
                     {% endif %}
-                    <a class="nav-link" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                    <a class="nav-link" href="{{ cat.get_absolute_url }}">
+                        {{ cat.name }}
+                    </a>
                 </li>
             {% endfor %}
 
@@ -232,13 +234,9 @@
                 <h5>
                   <strong>
                     <a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}
+                    <br/>
                         {% if product.badges %}
-                            {{ product.badges.all.name }}
-                            {% for badge in product.badges.badge %}
-                                test2
-                                {{ badge }}
-                                <span class="badge badge-pill danger-color">{{ badge.name }}</span>
-                            {% endfor %}
+                            <span class="badge badge-pill danger-color">{{ product.badges.all.values.get.name }}</span>
                         {% endif %}
                     </a>
                   </strong>

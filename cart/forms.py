@@ -2,7 +2,7 @@
 from django import forms
 
 # Quantity from 1 to 99 999 products
-PRODUCT_QUANTITY_CHOICES = [(int, str(i)) for i in range(1, 99_999)]
+PRODUCT_QUANTITY_CHOICES = [(int, str(i)) for i in range(1, 20)]
 
 
 class CartAddProductForm(forms.Form):

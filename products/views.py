@@ -20,13 +20,12 @@ def product_list(request, category_slug=None):
                   'products/product_list.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products,
-                   'images': images})
+                   'products': products})
 
 
-def product_detail(request, id_product):
+def product_detail(request, id):
     product = get_object_or_404(Product,
-                                id=id_product,
+                                id=id,
                                 available="AV")
     cart_product_form = CartAddProductForm()
     category = get_object_or_404(Category, name=product.category)

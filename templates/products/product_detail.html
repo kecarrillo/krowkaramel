@@ -12,20 +12,20 @@
 
       <!--Grid row-->
       <div class="row wow fadeIn">
+            <div class="col-lg-4 col-sm-6">
 
-        <!--Grid column-->
-        <div class="col-md-6 mb-4">
-
-          <img src="{% if product.image %}
-                              {{ product.image.url }}
-                          {% else %}
-                            {% static 'img/no_image.png' %}
-                          {% endif %}"
-                     class="card-img-top"
-                     alt="{% trans 'Product image' %}">
-
-        </div>
-        <!--Grid column-->
+                {% if product.images %}
+                    {% for image in product.images.all %}
+                        <div class="thumbnail">
+                             <img src="{{ image.image.url }}" class="img-thumbnail img-fluid vw-20 d-block" alt="{% trans 'Product image' %}">
+                        </div>
+                    {% endfor %}
+              {% else %}
+                    <div class="thumbnail">
+                        <img src="{% static 'img/no_image.png' %}" class="card-img-top" alt="{% trans 'Product image' %}">
+                    </div>
+              {% endif %}
+            </div>
 
         <!--Grid column-->
         <div class="col-md-6 mb-4">
@@ -34,7 +34,7 @@
           <div class="p-4">
 
             <div class="mb-3">
-                {% for badge in product.badges %}
+                {% for badge in product.badges.all %}
                     <a href="">
                         <span class="badge purple mr-1">{{badge.name}}</span>
                     </a>
@@ -44,25 +44,26 @@
             <p class="lead">
                 {% if product.is_promoted %}
                     <span class="mr-1">
-                        <del>{{product.price}}</del>
+                        <del>{{product.price}} €</del>
                     </span>
-                    <span>{{product.promoted_price}}</span>
+                    <span>{{product.promoted_price}} €</span>
                 {% else %}
-                    <span>{{product.price}}</span>
+                    <span>{{product.price}} €</span>
                 {% endif %}
             </p>
 
             <p class="lead font-weight-bold">{% trans "Description" %}</p>
 
-            <p>{{product.description}}</p>
+            <p>{{product.description | linebreaks}}</p>
 
-            <form class="d-flex justify-content-left">
+            <form action="{% url 'cart:cart_add' product.id %}" method="post" class="d-flex justify-content-left">
               <!-- Default input -->
-              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
-              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
+                {% csrf_token %}
+                {{ cart_product_form }}
+{#              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">#}
+              <button class="btn btn-primary btn-md my-0 p" type="submit">{% trans "Add to cart" %}
                 <i class="fas fa-shopping-cart ml-1"></i>
               </button>
-
             </form>
 
           </div>
@@ -86,15 +87,33 @@
 
             <p>{% trans "Category" %}: {{ product.category }}</p>
             <p>{% trans "Name" %}: {{ product.name }}</p>
-            <p>{% trans "Flavour" %}: {{ product.flavour }}</p>
-            <p>{% trans "Allergens" %}: {{ product.allergen }}</p>
+            <p>{% trans "Flavour" %}:
+
+                {% for flavour in product.flavour.all %}
+                    {{ flavour.name }}
+                {% endfor %}
+
+            </p>
+            <p>{% trans "Allergens" %}:
+                {% for allergen in product.allergen.all %}
+                    {{ allergen.name }}
+                {% endfor %}
+            </p>
             <p>{% trans "Bio" %}: {{ product.is_bio }}</p>
             <p>{% trans "Handcrafted" %}: {{ product.is_handcrafted }}</p>
             <p>{% trans "No Glucose Syrup" %}: {{ product.is_glucose_syrup_free }}</p>
             <p>{% trans "No Gluten" %}: {{ product.is_gluten_free }}</p>
             <p>{% trans "No Hydrogenated Vegetable Fats" %}: {{ product.is_hydrogenated_vegetable_fats_free }}</p>
             <p>{% trans "Quantity per product" %}: {{ product.unit_number }}</p>
-            <p>{% trans "Available" %}: {{ product.available }}</p>
+            <p>{% trans "Available" %}:
+                {% if product.available == 'AV' %}
+                    {% trans 'Available' %}
+                {% elif product.available == 'SO' %}
+                    {% trans 'Stock out' %}
+                {% else %}
+                    {% trans 'Shutdown' %}
+                {% endif %}
+            </p>
         </div>
         <!--Grid column-->
 
@@ -104,15 +123,22 @@
       <!--Grid row-->
       <div class="row wow fadeIn">
 
-          {% for prod in category.products %}
-            <!--Grid column-->
-            <div class="col-lg-4 col-md-12 mb-4">
-
-                <img src="{{ prod.image }}" class="img-fluid" alt="{{ prod.name }}">
-
-            </div>
-            <!--Grid column-->
-          {% endfor %}
+{#          {% for prod in category.products %}#}
+{#            <!--Grid column-->#}
+{#            <div class="view overlay">#}
+{#                <img src="{% if prod.images.first.image %}#}
+{#                              {{ prod.images.first.image.url }}#}
+{#                          {% else %}#}
+{#                            {% static 'img/no_image.png' %}#}
+{#                          {% endif %}"#}
+{#                     class="card-img-top"#}
+{#                     alt="{% trans 'Product image' %}">#}
+{#                <a href="{{ prod.get_absolute_url }}">#}
+{#                  <div class="mask rgba-white-slight"></div>#}
+{#                </a>#}
+{#              </div>#}
+{#            <!--Grid column-->#}
+{#          {% endfor %}#}
 
       </div>
       <!--Grid row-->
