@@ -18,11 +18,29 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path, include
 
+from django.contrib.sitemaps import GenericSitemap
+from django.contrib.sitemaps.views import sitemap
+
+from blog.models import Post, CategoryPost
+from products.models import Product, Category
+
+info_dict = {
+    'queryset': Post.objects.all(),
+    'queryset': CategoryPost.objects.all(),
+    'queryset': Product.objects.all(),
+    'queryset': Category.objects.all(),
+}
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),  # Django admin
     path('accounts/', include('allauth.urls')),  # URL Auth
     path('', include('pages.urls')),  # index
     path('products/', include('products.urls', namespace='shop')),  # e-shop
+    path('blog/', include('blog.urls')), # blog
+    path('sitemap.xml', sitemap, # sitemap
+        {'sitemaps': {'blog': GenericSitemap(info_dict, priority=0.6)}},
+        name='django.contrib.sitemaps.views.sitemap'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

@@ -44,10 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     # LOCAL
     'accounts',
     'pages',
     'products',
+    'blog',
     # 3rd PART
     'crispy_forms',
     'allauth',
