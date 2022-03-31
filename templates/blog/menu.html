@@ -1,0 +1,13 @@
+{% extends "_base.html"%}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "News" %}{% endblock title %}
+
+<h1>{% trans "Menu" %}</h1>
+
+{% for ctg in category %}
+
+    <a href="{% url 'blog_category' %}">{{ ctg | linebreaks }}</a>
+
+{% endfor %}
