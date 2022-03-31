@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.utils.translation import gettext_lazy
 
 from .views import SearchResultsListView, product_detail, product_list
 
@@ -23,10 +24,12 @@ urlpatterns = [
     # path('', CategoryListView.as_view(), name='category_list'),
     # path('<uuid:pk>/', ProductListView.as_view(), name='product_list'),
     path('', product_list, name='product_list'),
-    path('<slug:category_slug>/', product_list,
+    path(gettext_lazy('<slug:category_slug>/'), product_list,
          name='product_list_by_category'),
-    path('details/<uuid:id>/', product_detail, name='product_detail'),
+    path(gettext_lazy('details/<uuid:id>/'), product_detail,
+         name='product_detail'),
     # path('<uuid:pk>/<uuid:pk>', ProductDetailView.as_view(),
     #      name='product_detail'),
-    path('search/', SearchResultsListView.as_view(), name='search-results'),
+    path(gettext_lazy('search/'), SearchResultsListView.as_view(),
+         name='search-results'),
 ]

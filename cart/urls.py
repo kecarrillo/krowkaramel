@@ -14,12 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.utils.translation import gettext_lazy
+
 from . import views
 
 app_name = 'cart'
 
 urlpatterns = [
     path('', views.cart_detail, name='cart_detail'),
-    path('add/<uuid:product_id>', views.cart_add, name='cart_add'),  # pk ?
-    path('remove/<uuid:product_id>', views.cart_remove, name='cart_remove'),
+    path(gettext_lazy('add/<uuid:product_id>'), views.cart_add,
+         name='cart_add'),  # pk ?
+    path(gettext_lazy('remove/<uuid:product_id>'), views.cart_remove,
+         name='cart_remove'),
 ]

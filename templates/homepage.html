@@ -1,17 +1,42 @@
 <!-- templates/homepage.html -->
 {% extends '_base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}Homepage{% endblock title %}
 
 {% block content %}
-    <h1>Homepage</h1>
-    <img class="img-fluid rounded mx-auto d-block" src="{% static 'images/IMG_0075.jpg' %}">
+
+    <br/>
+    <h1 class="mt-5 mb-5 text-center">{% trans "Homepage" %}</h1>
+
+    <h2 class="mb-4">{% blocktrans %}Our new products{% endblocktrans %}</h2>
+    <!-- Images de nouveaux produits -->
+    <div class="container-fluid">
+        <div class="row wow fadeIn text-center">
+            <div class="col-lg-2 col-md-offset-1">
+                <div class="thumbnail h-100">
+                    <img class="img-fluid rounded mx-auto d-block h-100" src="{% static 'images/IMG_0075.jpg' %}">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="thumbnail h-100">
+                    <img class="img-fluid rounded mx-auto d-block h-100" src="{% static 'images/IMG_0080.jpg' %}">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="thumbnail h-100">
+                    <img class="img-fluid rounded mx-auto d-block h-100" src="{% static 'images/IMG_0081.jpg' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% if user.is_authenticated %}
-        <p>Hi {{ user.email }}!</p>
+        <p>{% trans "Hi" %} {{ user.email }}!</p>
         <p><a href="{%  url 'account_logout' %}">Log Out</a></p>
     {% else %}
-        <p>You are not logged in.</p>
+        <p>{% trans "You are not logged in." %}</p>
         <a href="{% url 'account_login' %}">Log In</a> |
         <a href="{% url 'account_signup' %}">Sign Up</a>
     {% endif %}

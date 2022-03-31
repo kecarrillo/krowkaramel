@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import socket
+
+from django.utils.translation import gettext_lazy
 from environs import Env
 from pathlib import Path
 
@@ -85,13 +87,14 @@ MEDIA_ROOT = str(BASE_DIR.joinpath('medias'))
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 # django-debug-toolbar
@@ -161,7 +164,22 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = 'fr'
+
+# LANGUAGES = (
+#     ('en-us', gettext_lazy('English')),
+#     ('de-de', gettext_lazy('Deutsch')),
+#     ('es-es', gettext_lazy('Español')),
+#     ('pt-pt', gettext_lazy('Português')),
+#     ('it-it', gettext_lazy('Italiano')),
+#     ('pl', gettext_lazy('Polska')),
+#     ('sv-se', gettext_lazy('Svenska')),
+#     ('fi', gettext_lazy('Suomalainen')),
+#     ('nl-nl', gettext_lazy('Nederlands')),
+#     ('da', gettext_lazy('Dansk')),
+#     ('el-gr', gettext_lazy('Ελληνική')),
+# )
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True

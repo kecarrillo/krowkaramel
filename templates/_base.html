@@ -29,35 +29,7 @@
   <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
-  <style type="text/css">
-    html,
-    body,
-    header,
-    .carousel {
-      height: 60vh;
-    }
-
-    @media (max-width: 740px) {
-
-      html,
-      body,
-      header,
-      .carousel {
-        height: 100vh;
-      }
-    }
-
-    @media (min-width: 800px) and (max-width: 850px) {
-
-      html,
-      body,
-      header,
-      .carousel {
-        height: 100vh;
-      }
-    }
-
-  </style>
+  <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -87,9 +59,9 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-{#          <li class="nav-item">#}
-{#            <a class="nav-link waves-effect" href="{% url 'blog/' %}" target="_blank">{% trans "News" %}</a>#}
-{#          </li>#}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'menu' %}" target="_blank">{% trans "News" %}</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link waves-effect" href="{% url 'shop:product_list' %}"
               target="_blank">{% trans "E-shop" %}</a>
@@ -164,6 +136,14 @@
         Langue
     <i class="fas fa-language ml-2 fa-lg"></i>
     </a>
+{#    {% get_available_languages as languages %}#}
+
+{#    {% translate "View this category in:" %}#}
+{#    {% for lang_code, lang_name in languages %}#}
+{#        {% language lang_code %}#}
+{#        <a href="{% url 'category' slug=category.slug %}">{{ lang_name }}</a>#}
+{#        {% endlanguage %}#}
+{#    {% endfor %}#}
     <div class="mt-3">
         <i class="fab fa-cc-visa ml-5 fa-3x"></i>
         <i class="fab fa-cc-paypal ml-2 fa-3x"></i>
