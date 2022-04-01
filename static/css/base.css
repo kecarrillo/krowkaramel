@@ -10,6 +10,8 @@ img {
   object-fit: cover;
 }
 
+h1 {}
+
 @media (max-width: 740px) {
 
   html,

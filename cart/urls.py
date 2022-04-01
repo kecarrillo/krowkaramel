@@ -23,7 +23,7 @@ app_name = 'cart'
 urlpatterns = [
     path('', views.cart_detail, name='cart_detail'),
     path(gettext_lazy('add/<uuid:product_id>'), views.cart_add,
-         name='cart_add'),  # pk ?
+         name='cart_add'),
     path(gettext_lazy('remove/<uuid:product_id>'), views.cart_remove,
          name='cart_remove'),
 ]

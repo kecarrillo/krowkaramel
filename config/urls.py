@@ -42,8 +42,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Django admin
     path('accounts/', include('allauth.urls')),  # URL Auth
     path('', include('pages.urls')),  # index
-    path(gettext_lazy('products/'), include('products.urls', namespace='shop')),  # shop
-    path(gettext_lazy('cart/'), include('cart.urls', namespace='cart')),  # Cart
+    path(gettext_lazy('products/'), include('products.urls',
+                                            namespace='shop')),  # shop
+    path(gettext_lazy('cart/'), include('cart.urls',
+                                        namespace='cart')),  # Cart
     path(gettext_lazy('blog/'), include('blog.urls')),  # blog
     path('sitemap.xml', sitemap,  # sitemap
          {'sitemaps': {'blog': GenericSitemap(info_dict, priority=0.6)}},

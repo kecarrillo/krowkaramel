@@ -2,8 +2,9 @@
 from django.views.generic import ListView
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 
-from .models import Product, Category, ProductImage
+from .models import Product, Category
 from cart.forms import CartAddProductForm
 
 
@@ -11,11 +12,19 @@ from cart.forms import CartAddProductForm
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(available='AV')
-    images = ProductImage.objects.all()
+    products_list = Product.objects.filter(available='AV')
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
+        products_list = products_list.filter(category=category)
+
+    paginator = Paginator(products_list,
+                          per_page=8,
+                          orphans=3,
+                          allow_empty_first_page=True
+                          )  # Show 8 products per page (min 3)
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
+
     return render(request,
                   'products/product_list.html',
                   {'category': category,

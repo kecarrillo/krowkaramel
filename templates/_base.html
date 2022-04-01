@@ -39,8 +39,8 @@
     <div class="container">
 
       <!-- Brand -->
-      <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-        <strong class="blue-text">Krowkaramel</strong>
+      <a class="navbar-brand waves-effect" href="{% url 'home' %}" target="_blank">
+        <strong class="blue-text">KrowKaramel</strong>
       </a>
 
       <!-- Collapse -->
@@ -77,25 +77,30 @@
             <a class="nav-link waves-effect">
               <span class="badge red z-depth-1 mr-1"> 1 </span>
               <i class="fas fa-shopping-cart"></i>
-              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+              <span class="clearfix d-none d-sm-inline-block"> {% trans "Cart" %} </span>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
-              <i class="fab fa-twitter"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded waves-effect"
-              target="_blank">
-              <i class="fab fa-github mr-2"></i>MDB GitHub
-            </a>
-          </li>
+
+            {% if user.is_authenticated %}
+                <li>
+                    <a href="#" class="nav-link border border-light rounded waves-effect ml-2"
+                        target="_blank"><i class="fas fa-user-circle mr-2"></i>{% trans "Profile" %}</a>
+                </li>
+                <li>
+                    <a href="{%  url 'account_logout' %}" class="nav-link border border-light rounded waves-effect ml-2"
+                        target="_blank"><i class="fas fa-sign-out-alt mr-2"></i>{% trans "Log Out" %}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'account_login' %}" class="nav-link border border-light rounded waves-effect ml-2"
+                        target="_blank"><i class="fas sign-in-alt mr-2"></i>{% trans "Log In" %}</a>
+                </li>
+                <li>
+                    <a href="{% url 'account_signup' %}" class="nav-link border border-light rounded waves-effect ml-2"
+                        target="_blank"><i class="fab user-plus mr-2"></i>{% trans "Sign up" %}</a>
+                </li>
+            {% endif %}
+
         </ul>
 
       </div>
@@ -103,10 +108,10 @@
     </div>
   </nav>
   <!-- Navbar -->
-
-  {% block content %}
-  {% endblock content %}
-
+  <main class="mt-5 pt-4">
+      {% block content %}
+      {% endblock content %}
+  </main>
 <!--Footer-->
 <footer class="page-footer text-center font-small mt-4 wow fadeIn">
 
